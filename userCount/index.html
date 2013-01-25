@@ -1,0 +1,29 @@
+<html>
+<head>
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+<script src="/socket.io/socket.io.js"></script>
+<script>
+  var socket = io.connect('localhost');
+  // socket.on('news', function (data) {
+  // 	//alert(data);
+  //   console.log(data);
+  //   socket.emit('my other event', { my: 'data', oh: 'yeah' });
+  //   console.log("emitted other event.");
+  // });
+  socket.on('updateUserCount', function (data) {
+  	console.log("Got updateUserCount with value "+data);
+  	$('.userCount').html(data);
+  });
+  // socket.on('user connected', function () {
+  // 	var currentCount = parseInt($('#usersConnected').html());
+  // 	$('#usersConnected').html(currentCount+1);
+  // 	console.log("user connected33");
+  // });
+</script>
+
+</head>
+<body>
+	There are <span class="userCount">0</span> users connected.
+</body>
+</html>
