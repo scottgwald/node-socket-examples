@@ -1,0 +1,51 @@
+<html>
+<head>
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+<script src="/socket.io/socket.io.js"></script>
+<script>
+  var socket = io.connect('localhost');
+  socket.on('next slide', function (data) {
+  	console.log("Got 'next slide'");
+  	$('.latestCommand').html("next slide");
+  });
+
+  socket.on('previous slide', function (data) {
+    console.log("Got 'previous slide'");
+    $('.latestCommand').html("previous slide");
+  });
+
+  function upArrow() {
+    console.log("Calling upArrow33.");
+    socket.emit('upArrow');
+  } 
+
+  function downArrow() {
+    console.log("Calling downArrow33.");
+    socket.emit('downArrow');
+  }
+
+  $(document).ready(function() {
+    $(document).keydown(function(event) {
+      console.log("Keydown event, oh yeah!!");
+      if (event.which == 38) {
+        upArrow();
+      } else if (event.which == 40) {
+        downArrow();
+      }
+    });
+  });
+
+</script>
+
+</head>
+<body>
+  <h1>Dashboard</h1>
+  <p>Sent command: <span class="latestCommand">(none so far)</span>.
+  </p>
+  Press the up/down arrows to send commands.
+
+  <script>
+  </script>
+</body>
+</html>
