@@ -1,0 +1,46 @@
+<html>
+<head>
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+<script src="/socket.io/socket.io.js"></script>
+<script>
+  var socket = io.connect('localhost');
+  socket.on('updateSharedVariable', function (data) {
+  	console.log("Got updateSharedVariable with value "+data);
+  	$('.sharedVariable').html(data);
+  });
+
+  function upArrow() {
+    console.log("Calling upArrow33.");
+    socket.emit('upArrow');
+  } 
+
+  function downArrow() {
+    console.log("Calling downArrow33.");
+    socket.emit('downArrow');
+  }
+
+  $(document).ready(function() {
+    $(document).keydown(function(event) {
+      console.log("Keydown event, oh yeah!!");
+      if (event.which == 38) {
+        upArrow();
+      } else if (event.which == 40) {
+        downArrow();
+      }
+    });
+  });
+
+</script>
+
+</head>
+<body>
+  <h1>Dashboard</h1>
+  <p>The shared variable is currently <span class="sharedVariable">not initialized in the view</span>.
+  </p>
+  Press the up/down arrows to modify.
+
+  <script>
+  </script>
+</body>
+</html>
