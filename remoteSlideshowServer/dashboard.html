@@ -5,6 +5,7 @@
 <script src="/socket.io/socket.io.js"></script>
 <script>
   var socket = io.connect('/');
+  socket.on('connect', function () {socket.emit('client',{client:'dashboard'})});
   socket.on('next slide', function (data) {
   	console.log("Got 'next slide'");
   	$('.latestCommand').html("next slide");
@@ -25,6 +26,11 @@
     socket.emit('downArrow');
   }
 
+  function otherKey(keyCode) {
+    console.log("Calling otherKey "+keyCode);
+    socket.emit('keypress',{keycode:keyCode});
+  }
+
   $(document).ready(function() {
     $(document).keydown(function(event) {
       console.log("Keydown event, oh yeah!!");
@@ -32,9 +38,15 @@
         upArrow();
       } else if (event.which == 40) {
         downArrow();
+      } else {
+        otherKey(event.which);
       }
     });
   });
+
+  $(window).unload(function() {
+    socket.close();
+  })  
 
 </script>
 
