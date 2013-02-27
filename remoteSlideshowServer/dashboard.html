@@ -2,10 +2,20 @@
 <head>
 
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
-<script src="/socket.io/socket.io.js"></script>
+<script src="//localhost/socket.io/socket.io.js"></script>
+<!-- <script src="//remote-slideshow.herokuapp.com/socket.io/socket.io.js"></script> -->
 <script>
-  var socket = io.connect('/');
-  socket.on('connect', function () {socket.emit('client',{client:'dashboard'})});
+  // var remoteServer = 'remote-slideshow.herokuapp.com';
+  var remoteServer = 'localhost';
+  //var socket = io.connect(remoteServer, {client: 'dashboard'});
+  // error not very verbose. Maybe it doesn't like the unknown option??
+  var socket = io.connect(remoteServer, {port:80,'sync disconnect on unload':true});
+  // var socket = io.connect('/');
+  
+  socket.on('connect', function () {
+    socket.emit('clientEvent',{clientType:'dashboard'});
+  });
+
   socket.on('next slide', function (data) {
   	console.log("Got 'next slide'");
   	$('.latestCommand').html("next slide");
@@ -43,12 +53,9 @@
       }
     });
   });
-
-  $(window).unload(function() {
-    socket.close();
-  })  
-
+  
 </script>
+
 
 </head>
 <body>

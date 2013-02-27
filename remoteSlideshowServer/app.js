@@ -104,8 +104,8 @@ io.sockets.on('connection', function (socket) {
     // probably no point in using the 'set' function for this,
     //   since I can't use 'get' after disconnect.
     //   but for now it doesn't hurt.
-    socket.set('clientType', clientTypeSet, function(){
-      clientTypes[socket.id] = clientTypeSet;
+    socket.set('clientType', clientType, function(){
+      clientTypes[socket.id] = clientType;
     });
   });
 
@@ -122,23 +122,3 @@ io.sockets.on('connection', function (socket) {
 
   });
 });
-    
-//   socket.on('disconnect', function () {
-//     /*
-//     // var clientTypeGet = "";
-//     // socket.get('client', function(err,name){
-//     //   clientTypeGet = name;
-//     // });
-//     try {
-//       serverLog("Detected that a client was disconnected."+socket.id);
-//       var keys = "";
-//       for (var key in socket) {
-//         keys += key+"\n";
-//       }
-//       serverLog("The socket keys: "+keys); // JSON.stringify(socket.keys()));
-//       //serverLog("socket.options is "+socket.options);
-//     } catch(e) {
-//       serverLog("Perhaps socket.options is undefined. "+e);
-//       serverLog("Detected that a client was disconnected (again)."+socket.id);
-
-//     }
